@@ -1,0 +1,32 @@
+{
+    "name": "bookshop-js-srv",
+    "description": "Generated from ../package.json, do not change!",
+    "version": "1.0.0",
+    "dependencies": {
+        "@sap/cds": "^3.7.1",
+		"@sap/xsenv": "latest",
+		"@sap/xssec": "latest",
+		"passport": "^0.4.0",
+        "express": "^4.17.0",
+        "hdb": "^0.17.0"
+    },
+    "engines": {
+        "node": "^8.9",
+        "npm": "^6"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "postinstall": "npm dedupe && node .build.js",
+        "start": "node server.js",
+        "watch": "nodemon -w . -i node_modules/**,.git/** -e cds -x npm run build"
+    },
+    "private": true,
+    "cds": {
+        "requires": {
+            "db": {
+                "kind": "hana",
+                "model": "gen/csn.json"
+            }
+        }
+    }
+}

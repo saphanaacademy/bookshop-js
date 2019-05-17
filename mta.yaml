@@ -1,0 +1,58 @@
+ID: bookshop-js
+_schema-version: "2.1"
+version: 0.0.2
+modules:
+  - name: bookshop-js-db
+    type: hdb
+    path: db
+    parameters:
+      memory: 256M
+      disk-quota: 256M
+    requires:
+      - name: bookshop-js-hdi-container
+  - name: bookshop-js-srv
+    type: nodejs
+    path: srv
+    parameters:
+      memory: 512M
+      disk-quota: 256M
+    provides:
+      - name: srv_api
+        properties:
+          url: ${default-url}
+    properties:
+      SAP_JWT_TRUST_ACL:
+        - clientid: "*"
+          identityzone: "sap-provisioning"
+    requires:
+      - name: bookshop-js-hdi-container
+      - name: bookshop-js-uaa
+  - name: bookshop-js-app
+    type: html5
+    path: app
+    parameters:
+       disk-quota: 256M
+       memory: 256M
+    build-parameters:
+       builder: grunt
+    requires:
+      - name: bookshop-js-uaa
+      - name: srv_api
+        group: destinations
+        properties:
+          name: srv_api
+          url: '~{url}'
+          forwardAuthToken: true
+    properties:
+      TENANT_HOST_PATTERN: "^(.*)-trial-dev-bookshop-js-app.cfapps.eu10.hana.ondemand.com"
+resources:
+  - name: bookshop-js-hdi-container
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: ${service-name}
+  - name: bookshop-js-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service-plan: application
+      service: xsuaa

@@ -1,0 +1,27 @@
+{
+	"xsappname": "bookshop-js",
+	"tenant-mode": "shared",
+	"description": "Bookshop",
+	"scopes": [{
+		"name": "$XSAPPNAME.User",
+		"description": "User"
+	}, {
+		"name": "$XSAPPNAME.Administrator",
+		"description": "Administrator"
+	}, {
+		"name": "$XSAPPNAME.Callback",
+		"description": "Multitenant Callbacks",
+		"grant-as-authority-to-apps": [
+			"$XSAPPNAME(application, sap-provisioning, tenant-onboarding)"
+		]
+	}],
+	"role-templates": [{
+		"name": "user",
+		"description": "User Role",
+		"scope-references": ["$XSAPPNAME.User"]
+	}, {
+		"name": "administrator",
+		"description": "Administrator Role",
+		"scope-references": ["$XSAPPNAME.Administrator", "$XSAPPNAME.User"]
+	}]
+}

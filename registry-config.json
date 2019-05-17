@@ -1,0 +1,9 @@
+{
+	"appId": "<xsappname>",
+	"displayName": "Bookshop-js",
+	"description": "Multitenant Bookshop",
+	"category": "Partner Engineering Digital Enablement",
+	"appUrls": {
+		"onSubscription": "https://<identityzone>-trial-dev-bookshop-js-srv.cfapps.eu10.hana.ondemand.com/callback/v1.0/tenants/{tenantId}"
+	}
+}

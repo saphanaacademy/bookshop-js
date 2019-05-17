@@ -1,0 +1,15 @@
+{
+	"welcomeFile": "/app/index.html",
+	"authenticationMethod": "route",
+	"routes": [{
+		"scope": "$XSAPPNAME.User",
+		"source": "^/srv/(.*)$",
+		"target": "$1",
+		"destination": "srv_api"
+	}, {
+		"scope": "$XSAPPNAME.User",
+		"source": "^/app/(.*)$",
+		"target": "$1",
+		"localDir": "webapp"
+	}]
+}

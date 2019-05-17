@@ -1,0 +1,112 @@
+<mvc:View
+	controllerName="bookshop.app.controller.App"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Shell>
+		<App busy="{appView>/busy}" class="sapUiSizeCompact">
+			<pages>
+				<Page title="{i18n>pageTitle}">
+					<content>
+						<Table
+							id="bookList"
+							growing="true"
+							growingThreshold="10"
+							items="{
+								path: '/Books',
+								parameters: {
+									$count: true,
+									$$updateGroupId : 'bookGroup'
+								}
+							}"
+							mode="SingleSelectLeft">
+							<headerToolbar>
+								<OverflowToolbar>
+									<content>
+										<ToolbarSpacer/>
+										<SearchField
+											id="searchField"
+											width="20%"
+											placeholder="{i18n>searchFieldPlaceholder}"
+											enabled="{= !${appView>/hasUIChanges}}"
+											search=".onSearch"/>
+										<Button
+											id="addButton"
+											icon="sap-icon://add"
+											tooltip="{i18n>createButtonText}"
+											enabled="{= !${appView>/hasUIChanges}}"
+											press=".onCreate">
+											<layoutData>
+												<OverflowToolbarLayoutData priority="NeverOverflow"/>
+											</layoutData>
+										</Button>
+										<Button
+											id="deleteButton"
+											icon="sap-icon://delete"
+											tooltip="{i18n>deleteButtonText}"
+											enabled="{= !${appView>/hasUIChanges}}"
+											press=".onDelete">
+											<layoutData>
+												<OverflowToolbarLayoutData priority="NeverOverflow"/>
+											</layoutData>
+										</Button>
+										<Button
+											id="refreshButton"
+											icon="sap-icon://refresh"
+											enabled="{= !${appView>/hasUIChanges}}"
+											tooltip="{i18n>refreshButtonText}"
+											press=".onRefresh"/>
+										<Button
+											id="sortButton"
+											icon="sap-icon://sort"
+											enabled="{= !${appView>/hasUIChanges}}"
+											tooltip="{i18n>sortButtonText}"
+											press=".onSort"/>
+									</content>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column id="titleColumn">
+									<Text text="{i18n>titleLabelText}"/>
+								</Column>
+								<Column id="stockColumn">
+									<Text text="{i18n>stockLabelText}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Input
+											value="{title}"
+											valueLiveUpdate="true"
+											liveChange=".onInputChange"/>
+									</cells>
+									<cells>
+										<Input
+											value="{stock}"
+											liveChange=".onInputChange"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</content>
+					<footer>
+						<Toolbar visible="{appView>/hasUIChanges}">
+							<ToolbarSpacer/>
+							<Button
+								id="saveButton"
+								type="Emphasized"
+								text="{i18n>saveButtonText}"
+								enabled="{= ${message>/}.length === 0 &amp;&amp; ${appView>/titleEmpty} === false }"
+								press=".onSave"/>
+							<Button
+								id="doneButton"
+								text="{i18n>cancelButtonText}"
+								press=".onResetChanges"/>
+						</Toolbar>
+					</footer>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
